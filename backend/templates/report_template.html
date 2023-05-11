@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Progress Report</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+
+        @page :first {
+            background-size: cover;
+            margin: 1cm;
+        }
+
+        #cover {
+            padding-top: 2cm;
+            break-after: page;
+        }
+
+        #cover h1 {
+            color: #333;
+            font-size: 3em;
+            margin-bottom: 0;
+        }
+
+        #cover h4 {
+            color: #555;
+            font-size: 1em;
+        }
+
+        #contents {
+            color: #333;
+        }
+
+        #contents #task-stats {
+            display: flex;
+        }
+
+        #contents #task-stats p {
+            margin: 0;
+            margin-right: 2mm;
+        }
+
+        #contents #at-a-glance span{
+            font-size: 1.5em;
+        }
+
+        #contents table {
+            border-collapse: collapse;
+        }
+
+        #contents table, th, td {
+            border: 1px solid #333;
+            padding: 1mm;
+        }
+
+        #contents #section-hdr {
+            margin-bottom: 1mm;
+        }
+    </style>
+</head>
+<body>
+    <article id="cover">
+        <section>
+            <h1>Monthly Progress Report</h1>
+            <h4>for the month of {{ month_year }}</h4>
+        </section>
+    </article>
+    <article id="contents">
+        <section>
+            <p>Hi, {{ user.username }}! This is your monthly progress report.</p>
+        </section>
+        <section id="at-a-glance">
+            <h2 id="section-hdr">This month</h2>
+            <div id="task-stats">
+                <p>Tasks created: <span>{{ task_count }}</span></p>
+                <p>Tasks completed: <span>{{ complete_count }}</span></p>
+                <p>Tasks pending: <span>{{ pending_count }}</span></p>
+                <p>Tasks overdue: <span>{{ overdue_count }}</span></p>
+            </div>
+        </section>
+        <section>
+            <h2 id="section-hdr">Tasks completed per day:</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Tasks Completed</th>
+                </tr>
+                {% for date in timeline %}
+                <tr>
+                    <td>{{ date.strftime('%d %B, %Y') }}</td>
+                    <td>{{ timeline[date] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </article>
+</body>
+</html>
